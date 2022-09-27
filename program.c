@@ -8,6 +8,8 @@
 // some global variables
 int i,j;
 int LineLenth;
+FILE *AllStudents;
+FILE *AllCourses;
 // end
 
 bool IsRunning = true;
@@ -38,13 +40,16 @@ int main(){
             case 2:
                 ShowAllStudents();
                 break;
-            case 3:
-//               {
-//                    char StudentID[10];
-//                    scanf("%s",StudentID);
-//                    SearchStudent(StudentID);
-//                    break;
-//               }
+            case 3:{
+                    system("cls");
+                    printf("\n\t\t **** Search Students ****\n\n");
+
+                    char StudentID[10];
+                    scanf("%s",StudentID);
+                    int IsFound = SearchStudent(StudentID);
+                    printf("%d",IsFound);
+                    break;
+               }
             case 4:
                 //EditStudent();
                 break;
@@ -150,8 +155,6 @@ void AddNewStudent(){
         strcat(StudentCourses,CourseName);
         strcat(StudentCourses,"\n");
     }
-    FILE *AllStudents;
-    FILE *AllCourses;
 
     AllStudents = fopen("data/All-Students.txt","a");
     fprintf(AllStudents,NewStudent);
@@ -172,7 +175,6 @@ void ShowAllStudents(){
     printf("|    ID    |        Name        |    Phone Number    |          Email               |  NO.Course  |\n");
     printf("|==========|====================|====================|==============================|=============|\n");
 
-    FILE *AllStudents;
     AllStudents = fopen("data/All-Students.txt","r");
 
     LineLenth = 200;
@@ -212,8 +214,48 @@ void ShowAllStudents(){
 }
 
 int SearchStudent(char StudentID[10]){
-    printf("%s",StudentID);
-    return 1;
+    char ThisStudetID[10];
+    int StudentFound = 1;
+    AllStudents = fopen("data/All-Students.txt","r");
+    LineLenth = 200;
+    char Student[LineLenth];
+
+    while(fgets(Student,LineLenth,AllStudents)){
+        for(i=0;Student[i] != '|'; i++){
+            ThisStudetID[i] = Student[i];
+        }
+        ThisStudetID[i] = '\0';
+        if(strcmp(StudentID,ThisStudetID) == 0){
+            StudentFound = 1;
+            break;
+        }else{
+            StudentFound = 0;
+        }
+    }
+
+    if(StudentFound){
+        printf("ID: ");
+        int Pipe = 0;
+        for(i=0;i<strlen(Student);i++){
+            if(Student[i] == '|'){
+                Pipe++;
+                printf("\n");
+                if(Pipe == 1){
+                    printf("Name: ");
+                }else if(Pipe == 2){
+                    printf("Email: ");
+                }else if(Pipe == 3){
+                    printf("Phone: ");
+                }else if(Pipe == 4){
+                    printf("Number of Courses: ");
+                }
+            }else{
+                printf("%c",Student[i]);
+            }
+        }
+    }
+
+    return StudentFound;
 }
 
 void EditStudent(int StudentId){
