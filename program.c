@@ -6,7 +6,8 @@
 #include <stdlib.h>
 
 // some global variables
-int i;
+int i,j;
+int LineLenth;
 // end
 
 bool IsRunning = true;
@@ -35,8 +36,7 @@ int main(){
                 AddNewStudent();
                 break;
             case 2:
-                //int y;
-                //ShowAllStudents();
+                ShowAllStudents();
                 break;
             case 3:
 //               {
@@ -107,10 +107,6 @@ void AddNewStudent(){
     char CourseCode[5];
     char CourseName[10];
 
-    FILE *AllStudents;
-    FILE *AllCourses;
-
-
     printf("Enter The ID: ");
     scanf("%s",&IDStr);
 
@@ -137,8 +133,7 @@ void AddNewStudent(){
     strcat(NewStudent,Phone);
     strcat(NewStudent,"|");
     strcat(NewStudent,NumberOfCoursesStr);
-    printf("%s\n",NewStudent);
-
+    strcat(NewStudent,"\n");
 
     for(i=0;i<NumberOfCourses;i++){
         printf("Enter Course %d The Code: ",i+1);
@@ -153,9 +148,10 @@ void AddNewStudent(){
         strcat(StudentCourses,CourseCode);
         strcat(StudentCourses,"|");
         strcat(StudentCourses,CourseName);
+        strcat(StudentCourses,"\n");
     }
-
-    printf("%s\n",StudentCourses);
+    FILE *AllStudents;
+    FILE *AllCourses;
 
     AllStudents = fopen("data/All-Students.txt","a");
     fprintf(AllStudents,NewStudent);
@@ -166,11 +162,53 @@ void AddNewStudent(){
     fclose(AllCourses);
 
     printf("Student Added Success\n");
-
 }
 
 void ShowAllStudents(){
-    printf("ShowAllStudents");
+    system("cls");
+
+    printf("\n\t\t **** All Students ****\n\n");
+    printf("|==========|====================|====================|==============================|=============|\n");
+    printf("|    ID    |        Name        |    Phone Number    |          Email               |  NO.Course  |\n");
+    printf("|==========|====================|====================|==============================|=============|\n");
+
+    FILE *AllStudents;
+    AllStudents = fopen("data/All-Students.txt","r");
+
+    LineLenth = 200;
+    char Student[LineLenth];
+
+    while(fgets(Student,LineLenth,AllStudents)){
+        printf("|");
+        int TotalSpace = 10;
+        int j;
+        int Pipe = 0;
+        for(i=0;i<strlen(Student)-1;i++){
+            if(Student[i] == '|'){
+                Pipe++;
+                for(j=0;j<TotalSpace;j++){
+                    printf(" ");
+                }
+                printf("|");
+                if(Pipe == 1 || Pipe == 2){
+                    TotalSpace = 20;
+                }else if(Pipe == 3){
+                    TotalSpace = 30;
+                }else if(Pipe == 4){
+                    TotalSpace = 13;
+                }
+            }else{
+                printf("%c",Student[i]);
+                TotalSpace--;
+            }
+        }
+        for(j=1; j<=TotalSpace;j++){
+            printf(" ");
+        }
+        printf("|\n");
+        printf("|----------|--------------------|--------------------|------------------------------|-------------|\n");
+    }
+    fclose(AllStudents);
 }
 
 int SearchStudent(char StudentID[10]){
