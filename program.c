@@ -504,15 +504,6 @@ void EditStudent(char StudentID[10])
     scanf("%d",&NewNumberOfCourses);
     itoa(NewNumberOfCourses,NewNumberOfCoursesStr,10);
 
-
-
-
-
-
-
-
-
-
     int Index;
     char ThisStudetID[10];
     int StudentFound = 0;
@@ -569,7 +560,6 @@ void EditStudent(char StudentID[10])
                         }
                         else if (Pipe == 3)
                         {
-                            //printf("Assign index = %d\n",Index);
                             OldEmail[Index] = Student[i];
                             Index++;
                         }
@@ -581,7 +571,7 @@ void EditStudent(char StudentID[10])
                     }
                 }
                 OldNumberOfCoursesStr[Index] = '\0';
-                //printf("final old = %s  ",OldEmail);
+
                 strcat(NewStudent,StudentID);
                 strcat(NewStudent,"|");
 
@@ -605,7 +595,6 @@ void EditStudent(char StudentID[10])
                 }
                 strcat(NewStudent,"|");
 
-
                 if(strcmp(NewEmail,"0") == 0)
                 {
                     strcat(NewStudent,OldEmail);
@@ -623,8 +612,14 @@ void EditStudent(char StudentID[10])
                 else
                 {
                     strcat(NewStudent,NewNumberOfCoursesStr);
+                    strcat(NewStudent,"\n");
                 }
-                strcat(NewStudent,"\n");
+
+                printf("Old Name: %s\n",OldName);
+                printf("Old Phone: %s\n",OldPhone);
+                printf("Old Email: %s\n",OldEmail);
+                printf("Old Course: %s\n",OldNumberOfCoursesStr);
+
                 fprintf(TempAllStudents,NewStudent);
             }
             else
@@ -659,7 +654,6 @@ void EditStudent(char StudentID[10])
 
         while (fgets(Course, LineLenth, ExistingAllCourses))
         {
-
             if (!IsCourseFound)
             {
                 for (i = 0; Course[i] != '|'; i++)
@@ -669,7 +663,6 @@ void EditStudent(char StudentID[10])
                 ThisStudetID[i] = '\0';
                 if (strcmp(StudentID, ThisStudetID) == 0)
                 {
-
                     IsCourseFound = 1;
                     for(i=0; i<NewNumberOfCourses; i++)
                     {
