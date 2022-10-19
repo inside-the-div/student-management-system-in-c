@@ -158,65 +158,103 @@ void AddNewStudent()
     char NumberOfCoursesStr[2];
     char NewStudent[200];
 
-    char StudentCourses[30];
+    char StudentCourses[300];
     char CourseCode[5];
     char CourseName[10];
 
-
-    int IsNewID = 0;
-    while(!IsNewID)
+    int IsValidID = 0;
+    while(!IsValidID)
     {
-        printf("Enter The ID: ");
+        printf(" Enter The ID: ");
         scanf("%s",&IDStr);
         if(IsAlreadyExists(IDStr,'i'))
         {
-            printf("This ID is Already Exists\n");
+            printf(" Error: This ID is already exists.\n\n");
+        }
+        else if(strlen(IDStr) > 10)
+        {
+            printf(" Error: ID can not be more than 10 characters.\n\n");
         }
         else
         {
-            IsNewID = 1;
+            IsValidID = 1;
         }
     }
 
-    printf("Enter The Name: ");
-    scanf(" %[^\n]s",&Name);
-
-    int IsNewPhone = 0;
-    while(!IsNewPhone)
+    int IsValidName = 0;
+    while(!IsValidName)
     {
-        printf("Enter The Phone: ");
+        printf(" Enter The Name: ");
+        scanf(" %[^\n]s",&Name);
+        if(strlen(Name) > 20)
+        {
+            printf(" Error: Name can not be more than 20 characters.\n\n");
+            IsValidName = 0;
+        }
+        else
+        {
+            IsValidName = 1;
+        }
+    }
+
+
+    int IsValidPhone = 0;
+    while(!IsValidPhone)
+    {
+        printf(" Enter The Phone: ");
         scanf("%s",&Phone);
         if(IsAlreadyExists(Phone,'p'))
         {
-            printf("This Phone Already Exists\n");
+            printf(" This Phone Already Exists\n");
+            IsValidPhone = 0;
+        }
+        else if(strlen(Phone) > 20)
+        {
+            printf(" Error: Phone can not be more than 20 characters.\n\n");
+            IsValidPhone = 0;
         }
         else
         {
-            IsNewPhone = 1;
+            IsValidPhone = 1;
         }
     }
 
-    int IsNewEmail = 0;
-    while(!IsNewEmail)
+    int IsValidEmail = 0;
+    while(!IsValidEmail)
     {
-        printf("Enter The Email: ");
+        printf(" Enter The Email: ");
         scanf("%s",&Email);
         if(IsAlreadyExists(Email,'e'))
         {
-            printf("This Email Already Exists.\n");
+            printf(" This Email Already Exists.\n");
+            IsValidEmail = 0;
+        }
+        else if(strlen(Email) > 30)
+        {
+            printf(" Error: Email can not be more than 30 characters.\n\n");
+            IsValidEmail = 0;
         }
         else
         {
-            IsNewEmail = 1;
+            IsValidEmail = 1;
+        }
+    }
+    int IsValidNumberOfCourse = 0;
+    while(!IsValidNumberOfCourse)
+    {
+        printf(" Number of courses: ");
+        scanf("%d",&NumberOfCourses);
+        if(NumberOfCourses <= 0 || NumberOfCourses > 4)
+        {
+            printf(" Error: Number of courses can not be more than 4 and lees than 1.\n\n");
+            IsValidNumberOfCourse = 0;
+        }
+        else
+        {
+            IsValidNumberOfCourse = 1;
         }
     }
 
-    printf("Number of courses: ");
-    scanf("%d",&NumberOfCourses);
-    if(NumberOfCourses <= 0 || NumberOfCourses > 4)
-    {
-        printf("Student Must Have at list 1 and At most 4 courses\n");
-    }
     itoa(NumberOfCourses,NumberOfCoursesStr,10);
 
     NewStudent[0] = 0;
@@ -234,15 +272,44 @@ void AddNewStudent()
     AllCourses  = fopen("data/All-Courses.txt","a");
     StudentCourses[0] = 0;
     strcat(StudentCourses,IDStr);
-
+    int IsValidCourseCode;
+    int IsValidCourseName;
+    getchar();
     for(i=0; i<NumberOfCourses; i++)
     {
-        printf("Enter Course %d The Code: ",i+1);
-        scanf("%s",&CourseCode);
 
-        printf("Enter Course %d The Name: ",i+1);
-        scanf(" %[^\n]s",&CourseName);
+        IsValidCourseCode = 0;
+        while(!IsValidCourseCode)
+        {
+            printf(" Enter Course %d Code: ",i+1);
+            scanf("%s",&CourseCode);
 
+            if(strlen(CourseCode) > 5){
+                printf(" Error: Course Code can not be more than 5 characters.\n\n");
+                IsValidCourseCode = 0;
+            }else{
+                IsValidCourseCode = 1;
+            }
+
+        }
+
+        IsValidCourseName = 0;
+        while(!IsValidCourseName)
+        {
+            printf(" Enter Course %d Name: ",i+1);
+            scanf(" %[^\n]s",&CourseName);
+            //getchar();
+            if(strlen(CourseName) > 10){
+                printf(" Error: Course Name can not be more than 10 characters.\n\n");
+                CourseName[0] = 0;
+                IsValidCourseName = 0;
+            }else{
+                break;
+            }
+            printf("IsValidCourseName %d\n",IsValidCourseName);
+        }
+        //printf("  asdEnter Course %d Name: ",i+1);
+        //scanf(" %[^\n]s",&CourseName);
         strcat(StudentCourses,"|");
         strcat(StudentCourses,CourseCode);
         strcat(StudentCourses,"|");
@@ -258,7 +325,7 @@ void AddNewStudent()
     strcat(StudentCourses,"\n");
     fclose(AllCourses);
 
-    printf("Student Added Success\n");
+    printf(" Student Added Successfully.\n");
 }
 
 void ShowAllStudents()
@@ -424,7 +491,8 @@ int SearchStudent(char StudentID[10])
                 }
                 else
                 {
-                    if(CourseCount != 1){
+                    if(CourseCount != 1)
+                    {
                         printf("\n");
                     }
                     printf("\n Course %d Code: ",CourseCount);
@@ -467,8 +535,21 @@ void EditStudent(char StudentID[10])
     char NewCourseCode[5];
     char NewCourseName[10];
 
-    printf("Enter The New Name: ");
-    scanf(" %[^\n]s",&NewName);
+
+    int IsValidName = 0;
+    while(!IsValidName)
+    {
+        printf(" Enter The New Name: ");
+        scanf(" %[^\n]s",&NewName);
+        if(strlen(NewName) > 20)
+        {
+            printf(" Error: Name can not be more than 20 characters.\n\n");
+        }
+        else
+        {
+            IsValidName = 1;
+        }
+    }
 
     int IsNewPhone = 0;
     while(!IsNewPhone)
@@ -478,6 +559,10 @@ void EditStudent(char StudentID[10])
         if(IsAlreadyExists(NewPhone,'p'))
         {
             printf("This Phone Already Exists\n");
+        }
+        else if(strlen(NewPhone) > 20)
+        {
+            printf(" Error: Phone can not be more than 20 characters.\n\n");
         }
         else
         {
@@ -493,6 +578,10 @@ void EditStudent(char StudentID[10])
         if(IsAlreadyExists(NewEmail,'e'))
         {
             printf("This Email Already Exists.\n");
+        }
+        else if(strlen(NewEmail) > 30)
+        {
+            printf(" Error: Email can not be more than 30 characters.\n\n");
         }
         else
         {
