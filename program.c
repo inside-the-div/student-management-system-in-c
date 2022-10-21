@@ -23,12 +23,14 @@ void AddNewStudent();
 void ShowAllStudents();
 int  SearchStudent(char StudentID[10]);
 void EditStudent(char StudentID[10]);
-int  DeleteStudent(char StudentID[10]);
+void  DeleteStudent(char StudentID[10]);
 int DeleteAllStudents();
 int IsAlreadyExists(char GivenLine[30],char InfoType);
 void ErrorAndRestart(char *Error[100]);
 void UserGuideline();
 void AboutUs();
+void GoBackOrExit();
+void ExitProject();
 
 int main()
 {
@@ -52,18 +54,21 @@ int main()
         {
             system("cls");
             printf("\n\t\t **** Search Students ****\n\n");
-            printf("Enter The Student ID: ");
+            printf(" Enter The Student ID: ");
             scanf("%s",StudentID);
             int IsFound = SearchStudent(StudentID);
             if(!IsFound)
             {
-                printf("No Student Found\n");
+                printf(" !!!!!!!! No Student Found !!!!!!!!!\n");
             }
+            printf("\n");
+            GoBackOrExit();
             break;
         }
         case 4:
-            //EditStudent();
-            printf("Enter The Student ID: ");
+            system("cls");
+            printf("\n\t\t **** Edit a Student ****\n\n");
+            printf(" Enter The Student ID: ");
             scanf("%s",StudentID);
             int IsFound = SearchStudent(StudentID);
 
@@ -73,38 +78,37 @@ int main()
             }
             else
             {
-                printf("No Student Found\n");
+                printf(" No Student Found\n");
             }
             break;
         case 5:
             system("cls");
             printf("\n\t\t **** Delete a Student ****\n\n");
-            printf("Enter The Student ID: ");
+            printf(" Enter The Student ID: ");
             scanf("%s",StudentID);
-            int isDeleted = DeleteStudent(StudentID);
-
+            DeleteStudent(StudentID);
             break;
         case 6:
         {
             char Sure = 'N';
             getchar();
-            printf("Are you sure want to delete all the students? (Y/N): ");
+            printf(" Are you sure want to delete all the students? (Y/N): ");
             scanf("%c",&Sure);
             if(Sure == 'Y' || Sure == 'y')
             {
                 int IsDeleted = DeleteAllStudents();
                 if(IsDeleted)
                 {
-                    printf("Success\n");
+                    printf(" Success\n");
                 }
                 else
                 {
-                    printf("Your Data is Safe.\n");
+                    printf(" Your Data is Safe.\n");
                 }
             }
             else
             {
-                printf("Your Data is Safe.\n");
+                printf(" Your Data is Safe.\n");
             }
             break;
         }
@@ -159,8 +163,8 @@ void AddNewStudent()
     char NewStudent[200];
 
     char StudentCourses[300];
-    char CourseCode[5];
-    char CourseName[10];
+    char CourseCode[300];
+    char CourseName[300];
 
     int IsValidID = 0;
     while(!IsValidID)
@@ -277,7 +281,6 @@ void AddNewStudent()
     getchar();
     for(i=0; i<NumberOfCourses; i++)
     {
-
         IsValidCourseCode = 0;
         while(!IsValidCourseCode)
         {
@@ -290,7 +293,6 @@ void AddNewStudent()
             }else{
                 IsValidCourseCode = 1;
             }
-
         }
 
         IsValidCourseName = 0;
@@ -298,23 +300,17 @@ void AddNewStudent()
         {
             printf(" Enter Course %d Name: ",i+1);
             scanf(" %[^\n]s",&CourseName);
-            //getchar();
+
             if(strlen(CourseName) > 10){
-                printf(" Error: Course Name can not be more than 10 characters.\n\n");
-                CourseName[0] = 0;
-                IsValidCourseName = 0;
+                printf(" Error: Course Name can not be more than 10 characters.\n");
             }else{
                 break;
             }
-            printf("IsValidCourseName %d\n",IsValidCourseName);
         }
-        //printf("  asdEnter Course %d Name: ",i+1);
-        //scanf(" %[^\n]s",&CourseName);
         strcat(StudentCourses,"|");
         strcat(StudentCourses,CourseCode);
         strcat(StudentCourses,"|");
         strcat(StudentCourses,CourseName);
-
     }
     strcat(StudentCourses,"\n");
     AllStudents = fopen("data/All-Students.txt","a");
@@ -325,7 +321,8 @@ void AddNewStudent()
     strcat(StudentCourses,"\n");
     fclose(AllCourses);
 
-    printf(" Student Added Successfully.\n");
+    printf(" Successfully Added The Student.\n");
+    GoBackOrExit();
 }
 
 void ShowAllStudents()
@@ -385,6 +382,8 @@ void ShowAllStudents()
         printf("|----------|--------------------|--------------------|------------------------------|-------------|\n");
     }
     fclose(AllStudents);
+
+    GoBackOrExit();
 }
 
 int SearchStudent(char StudentID[10])
@@ -417,7 +416,6 @@ int SearchStudent(char StudentID[10])
 
     if(StudentFound)
     {
-
         printf("\n One Student Found for ID: %s\n\n",StudentID);
         printf(" Student Informations\n");
 
@@ -495,7 +493,7 @@ int SearchStudent(char StudentID[10])
                     {
                         printf("\n");
                     }
-                    printf("\n Course %d Code: ",CourseCount);
+                    printf(" Course %d Code: ",CourseCount);
                 }
 
             }
@@ -514,32 +512,32 @@ void EditStudent(char StudentID[10])
 {
     printf("\n\t\t **** Update The New Student ****\n\n");
 
-    char OldName[20];
-    char OldPhone[20];
-    char OldEmail[30];
-    char OldEmail2[100];
+    char OldName[300];
+    char OldPhone[300];
+    char OldEmail[300];
+    char OldEmail2[300];
     OldEmail2[0] = 0;
-    char OldNumberOfCoursesStr[2];
-    char NewStudent[200];
+    char OldNumberOfCoursesStr[300];
+    char NewStudent[300];
     NewStudent[0] = 0;
-    char StudentCourses[30];
-    char OldCourseCode[5];
-    char OldCourseName[10];
+    char StudentCourses[300];
+    char OldCourseCode[300];
+    char OldCourseName[300];
 
-    char NewName[20];
-    char NewPhone[20];
-    char NewEmail[30];
+    char NewName[300];
+    char NewPhone[300];
+    char NewEmail[300];
     int NewNumberOfCourses;
     char NewNumberOfCoursesStr[2];
 
-    char NewCourseCode[5];
-    char NewCourseName[10];
+    char NewCourseCode[300];
+    char NewCourseName[300];
 
 
     int IsValidName = 0;
     while(!IsValidName)
     {
-        printf(" Enter The New Name: ");
+        printf(" Enter The New Name(0 for skip): ");
         scanf(" %[^\n]s",&NewName);
         if(strlen(NewName) > 20)
         {
@@ -554,11 +552,11 @@ void EditStudent(char StudentID[10])
     int IsNewPhone = 0;
     while(!IsNewPhone)
     {
-        printf("Enter The New Phone: ");
+        printf(" Enter The New Phone(0 for skip): ");
         scanf("%s",&NewPhone);
         if(IsAlreadyExists(NewPhone,'p'))
         {
-            printf("This Phone Already Exists\n");
+            printf(" This Phone Already Exists\n");
         }
         else if(strlen(NewPhone) > 20)
         {
@@ -573,11 +571,11 @@ void EditStudent(char StudentID[10])
     int IsNewEmail = 0;
     while(!IsNewEmail)
     {
-        printf("Enter The New Email: ");
+        printf(" Enter The New Email(0 for skip): ");
         scanf("%s",&NewEmail);
         if(IsAlreadyExists(NewEmail,'e'))
         {
-            printf("This Email Already Exists.\n");
+            printf(" This Email Already Exists.\n");
         }
         else if(strlen(NewEmail) > 30)
         {
@@ -589,7 +587,7 @@ void EditStudent(char StudentID[10])
         }
     }
 
-    printf("Number of New courses: ");
+    printf(" Number of New courses(0 for skip): ");
     scanf("%d",&NewNumberOfCourses);
     itoa(NewNumberOfCourses,NewNumberOfCoursesStr,10);
 
@@ -704,11 +702,6 @@ void EditStudent(char StudentID[10])
                     strcat(NewStudent,"\n");
                 }
 
-                printf("Old Name: %s\n",OldName);
-                printf("Old Phone: %s\n",OldPhone);
-                printf("Old Email: %s\n",OldEmail);
-                printf("Old Course: %s\n",OldNumberOfCoursesStr);
-
                 fprintf(TempAllStudents,NewStudent);
             }
             else
@@ -734,13 +727,14 @@ void EditStudent(char StudentID[10])
         int IsCourseFound = 0;
         LineLenth = 200;
 
-        char StudentCourses[30];
+        char StudentCourses[300];
         char Course[LineLenth];
-        char CourseCode[5];
-        char CourseName[10];
+        char CourseCode[300];
+        char CourseName[300];
 
         StudentCourses[0] = 0;
-
+        int IsValidCourseCode;
+        int IsValidCourseName;
         while (fgets(Course, LineLenth, ExistingAllCourses))
         {
             if (!IsCourseFound)
@@ -756,11 +750,32 @@ void EditStudent(char StudentID[10])
                     for(i=0; i<NewNumberOfCourses; i++)
                     {
                         strcat(StudentCourses,StudentID);
-                        printf("Enter Course %d The Code: ",i+1);
-                        scanf("%s",&CourseCode);
+                        IsValidCourseCode = 0;
+                        while(!IsValidCourseCode)
+                        {
+                            printf(" Enter New Course %d Code: ",i+1);
+                            scanf("%s",&CourseCode);
 
-                        printf("Enter Course %d The Name: ",i+1);
-                        scanf(" %[^\n]s",&CourseName);
+                            if(strlen(CourseCode) > 5){
+                                printf(" Error: Course Code can not be more than 5 characters.\n\n");
+                                IsValidCourseCode = 0;
+                            }else{
+                                IsValidCourseCode = 1;
+                            }
+                        }
+
+                        IsValidCourseName = 0;
+                        while(!IsValidCourseName)
+                        {
+                            printf(" Enter New Course %d Name: ",i+1);
+                            scanf(" %[^\n]s",&CourseName);
+
+                            if(strlen(CourseName) > 10){
+                                printf(" Error: Course Name can not be more than 10 characters.\n");
+                            }else{
+                                break;
+                            }
+                        }
 
                         strcat(StudentCourses,"|");
                         strcat(StudentCourses,CourseCode);
@@ -786,12 +801,15 @@ void EditStudent(char StudentID[10])
         remove("data/All-Courses.txt");
         rename("data/Temp-All-Courses.txt", "data/All-Courses.txt");
     }
+
+    printf(" Student Updated Successfully.\n");
+    GoBackOrExit();
 }
 
-int DeleteStudent(char StudentID[10])
+void DeleteStudent(char StudentID[10])
 {
     char ThisStudetID[10];
-    int StudentFound = 1;
+    int StudentFound = 0;
     int Pipe;
     ExistingAllStudents = fopen("data/All-Students.txt","r");
     TempAllStudents = fopen("data/Temp-All-Students.txt","w");
@@ -818,7 +836,7 @@ int DeleteStudent(char StudentID[10])
     fclose(ExistingAllStudents);
     fclose(TempAllStudents);
 
-    int CourseFound = 1;
+    int CourseFound = 0;
     ExistingAllCourses = fopen("data/All-Courses.txt","r");
     TempAllCourses = fopen("data/Temp-All-Courses.txt","w");
     char Course[LineLenth];
@@ -849,14 +867,13 @@ int DeleteStudent(char StudentID[10])
 
     if(StudentFound || CourseFound)
     {
-        printf("Successfully Deleted The Student.\n");
-        return 1;
+        printf(" Successfully Deleted The Student.\n");
     }
     else
     {
-        printf("Student/Courses Not Found!\nMake sure you enter the correct ID.\n");
-        return 0;
+        printf(" Student/Courses Not Found!\n Make sure you enter the correct ID.\n\n");
     }
+    GoBackOrExit();
 }
 
 int DeleteAllStudents()
@@ -976,4 +993,33 @@ void UserGuideline()
 void AboutUs()
 {
     printf("AboutUs");
+}
+
+void GoBackOrExit(){
+    getchar();
+    char Option;
+    printf(" Go back(b)? or Exit(0)?: ");
+    scanf("%c",&Option);
+    if(Option == '0'){
+        ExitProject();
+    }else{
+        system("cls");
+    }
+    return 0;
+}
+
+void ExitProject(){
+    system("cls");
+    int i;
+    char ThankYou[100]     = " ========= Thank You =========\n";
+    char SeeYouSoon[100]   = " ========= See You Soon ======\n";
+    for(i=0;i<strlen(ThankYou);i++){
+        printf("%c",ThankYou[i]);
+        Sleep(40);
+    }
+    for(i=0;i<strlen(SeeYouSoon);i++){
+        printf("%c",SeeYouSoon[i]);
+        Sleep(40);
+    }
+    exit(0);
 }
