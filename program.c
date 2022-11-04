@@ -5,14 +5,13 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-
 struct StudentInfo
 {
     char ID[10];
     char Name[20];
     char Email[30];
     char Phone[20];
-    int NumberOfCourse;
+    int  NumberOfCourse;
 };
 
 struct CourseInfo
@@ -25,12 +24,8 @@ struct CourseInfo
 struct StudentInfo Students[100];
 struct CourseInfo Courses[500];
 
-
-
-
 // some global variables
 int i,j;
-int LineLenth;
 int TotalStudents = 0;
 int TotalCourse = 0;
 char StudentID[10];
@@ -50,7 +45,7 @@ int  SearchStudent(char StudentID[10]);
 void EditStudent(int StudentFoundIndex);
 void DeleteStudent(int StudentIndex);
 void DeleteAllStudents();
-int IsAlreadyExists(char GivenLine[30],char InfoType, char StudentID[300]);
+int  IsAlreadyExists(char GivenLine[30],char InfoType, char StudentID[300]);
 void ErrorAndRestart(char *Error[100]);
 void DeleteCourseByIndex(int CourseIndex);
 void DeleteStudentByIndex(int CourseIndex);
@@ -60,21 +55,9 @@ void GoBackOrExit();
 void ExitProject();
 void DataSeed();
 
-
 int main()
 {
-
-    DataSeed();
-    //DeleteStudentByIndex(2);
-    //DeleteStudent(1);
-    //ShowAllStudents();
-    //DeleteCourseByIndex(1);
-    //DeleteCourseByIndex(1);
-//    for(i=0; i<TotalCourse; i++)
-//    {
-//        printf("Student ID: %s\n",Courses[i].StudentID);
-//        printf("Course Name: %s\n",Courses[i].Name);
-//    }
+    DataSeed(); // you can comment this line if not want dummy data
 
     while(IsRunning)
     {
@@ -85,12 +68,19 @@ int main()
         {
         case 0:
             IsRunning = false;
+            ExitProject();
             break;
         case 1:
+            system("cls");
+            printf("\n\t\t **** Add A New Student ****\n\n");
             AddNewStudent();
+            GoBackOrExit();
             break;
         case 2:
+            system("cls");
+            printf("\n\t\t **** All Students ****\n\n");
             ShowAllStudents();
+            GoBackOrExit();
             break;
         case 3:
         {
@@ -101,7 +91,7 @@ int main()
             int IsFound = SearchStudent(StudentID);
             if(IsFound<0)
             {
-                printf(" !!!!!!!! No Student Found !!!!!!!!!\n");
+                printf(" No Student Found\n\n");
             }
             printf("\n");
             GoBackOrExit();
@@ -120,8 +110,9 @@ int main()
             }
             else
             {
-                printf(" No Student Found\n");
+                printf(" No Student Found\n\n");
             }
+            GoBackOrExit();
             break;
         case 5:
             system("cls");
@@ -133,11 +124,27 @@ int main()
 
             if(DeleteStudentFoundIndex>=0)
             {
-                DeleteStudent(DeleteStudentFoundIndex);
+                char Sure = 'N';
+                getchar();
+                printf("\n\n");
+                printf(" Are you sure want to delete this student? (Y/N): ");
+                scanf("%c",&Sure);
+
+                if(Sure == 'Y' || Sure == 'y')
+                {
+                    DeleteStudent(DeleteStudentFoundIndex);
+                }
+                else
+                {
+                    printf(" Your Data is Safe.\n\n");
+                    GoBackOrExit();
+                }
+
             }
             else
             {
-                printf(" No Student Found\n");
+                printf(" No Student Found\n\n");
+                GoBackOrExit();
             }
 
             break;
@@ -145,6 +152,9 @@ int main()
         {
             char Sure = 'N';
             getchar();
+            system("cls");
+            printf("\n\t\t **** Delete ALL Students ****\n\n");
+
             printf(" Are you sure want to delete all the students? (Y/N): ");
             scanf("%c",&Sure);
             if(Sure == 'Y' || Sure == 'y')
@@ -153,21 +163,27 @@ int main()
             }
             else
             {
-                printf(" Your Data is Safe.\n");
+                printf(" Your Data is Safe.\n\n");
+                GoBackOrExit();
             }
             break;
         }
 
         case 7:
-            //ClearWindow();
+            system("cls");
             break;
         case 8:
-            //UserGuideline();
+            system("cls");
+            UserGuideline();
+            GoBackOrExit();
             break;
         case 9:
-            //AboutUs();
+            system("cls");
+            AboutUs();
+            GoBackOrExit();
             break;
         default:
+            ExitProject();
             break;
         }
     }
@@ -180,25 +196,22 @@ void Menu()
     printf("\n\n\t***Student Management System Using C***\n\n");
     printf("\t\t\tMAIN MENU\n");
     printf("\t\t=======================\n");
-    printf("\t\t[1] Add a new student.\n");
-    printf("\t\t[2] Show all students.\n");
-    printf("\t\t[3] Search students.\n");
-    printf("\t\t[4] Edit a student.\n");
-    printf("\t\t[5] Delete a student.\n");
-    printf("\t\t[6] Delete all students.\n");
-    printf("\t\t[7] Clear the window.\n");
-    printf("\t\t[i] User Guideline.\n");
-    printf("\t\t[a] About Us.\n");
-    printf("\t\t[0] Exit the program.\n");
+    printf("\t\t[1] Add A New student.\n");
+    printf("\t\t[2] Show All students.\n");
+    printf("\t\t[3] Search A student.\n");
+    printf("\t\t[4] Edit A student.\n");
+    printf("\t\t[5] Delete A student.\n");
+    printf("\t\t[6] Delete All students.\n");
+    printf("\t\t[7] Clear The window.\n");
+    printf("\t\t[8] User Guideline.\n");
+    printf("\t\t[9] About Us.\n");
+    printf("\t\t[0] Exit the Program.\n");
     printf("\t\t=======================\n");
     printf("\t\tEnter The Choice: ");
 } // end menu
 
 void AddNewStudent()
 {
-    system("cls");
-    printf("\n\t\t **** Add A New Student ****\n\n");
-
     char StudentID[300];
     char Name[300];
     char Phone[300];
@@ -232,7 +245,6 @@ void AddNewStudent()
             IsValidID = 1;
         }
     }
-
 
     int IsValidName = 0;
     while(!IsValidName)
@@ -307,7 +319,6 @@ void AddNewStudent()
         }
     }
 
-
     int IsValidNumberOfCourse = 0;
     while(!IsValidNumberOfCourse)
     {
@@ -346,22 +357,17 @@ void AddNewStudent()
         TotalCourse++;
     }
 
-    printf(" Successfully Added The Student.\n");
-    GoBackOrExit();
+    printf("\n Student Added Successfully.\n\n");
 }
 
 void ShowAllStudents()
 {
-    system("cls");
-
-    printf("\n\t\t **** All Students ****\n\n");
     printf("|==========|====================|==============================|====================|=============|\n");
     printf("|    ID    |        Name        |            Email             |       Phone        |  NO.Course  |\n");
     printf("|==========|====================|==============================|====================|=============|\n");
 
     for(i=0; i<TotalStudents; i++)
     {
-
         printf("|");
         printf("%s",Students[i].ID);
         for(j=0; j < (10-strlen(Students[i].ID)); j++)
@@ -397,7 +403,6 @@ void ShowAllStudents()
 
     }
     printf("\n");
-    GoBackOrExit();
 }
 
 int SearchStudent(char StudentID[10])
@@ -597,8 +602,8 @@ void EditStudent(int StudentFoundIndex)
         }
     }
 
-    printf(" Student Updated Successfully.\n");
-    GoBackOrExit();
+    printf(" Student Updated Successfully.\n\n");
+
 }
 
 void DeleteStudent(int StudentIndex)
@@ -620,6 +625,7 @@ void DeleteStudent(int StudentIndex)
         DeleteCourseByIndex(FirstCourseIndexs);
     }
     DeleteStudentByIndex(StudentIndex);
+    printf(" Student Deleted Successfully.\n\n");
     GoBackOrExit();
 }
 
@@ -627,6 +633,7 @@ void DeleteAllStudents()
 {
     TotalStudents = 0;
     TotalCourse = 0;
+    printf(" All Students Deleted Successfully.\n\n");
     GoBackOrExit();
 }
 
@@ -717,12 +724,29 @@ void ErrorAndRestart(char *error[100])
 
 void UserGuideline()
 {
-    printf("UserGuideline");
+    printf("\n\t\t **** How it Works? ****\n\n");
+    printf(" -> You will only able to store the Student's ID, Name, Email, Phone, Number of Courses.\n");
+    printf(" -> A student can have maximum 4 courses and minimum 1 course.\n");
+    printf(" -> Student ID can be maximum 10 characters long and unique for every students.\n");
+    printf(" -> Student Name can be maximum 20 characters long.\n");
+    printf(" -> Student Email can be maximum 30 characters long and unique for every students.\n");
+    printf(" -> Student Phone can be maximum 20 characters long and unique for every students.\n");
+    printf(" -> Course code can be maximum 10 characters long.\n");
+    printf(" -> Course Name can be maximum 20 characters long.\n\n");
+
+    printf(" ->> visit www.insideTheDiv.com for more project like this. <<-\n\n");
 }
 
 void AboutUs()
 {
-    printf("AboutUs");
+    printf("\n\t\t **** About US? ****\n\n");
+
+    printf(" Some important note we should remember.\n");
+    printf(" -> This is a simple student management system project.\n");
+    printf(" -> You can modify the source code.\n");
+    printf(" -> You can use this project only for personal purpose not for business.\n\n");
+
+    printf(" ->> visit www.insideTheDiv.com for more project like this. <<-\n\n");
 }
 
 void GoBackOrExit()
