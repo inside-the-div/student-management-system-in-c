@@ -196,18 +196,18 @@ void Menu()
     printf("\n\n\t***Student Management System Using C***\n\n");
     printf("\t\t\tMAIN MENU\n");
     printf("\t\t=======================\n");
-    printf("\t\t[1] Add A New student.\n");
-    printf("\t\t[2] Show All students.\n");
-    printf("\t\t[3] Search A student.\n");
-    printf("\t\t[4] Edit A student.\n");
-    printf("\t\t[5] Delete A student.\n");
-    printf("\t\t[6] Delete All students.\n");
+    printf("\t\t[1] Add A New Student.\n");
+    printf("\t\t[2] Show All Students.\n");
+    printf("\t\t[3] Search Students.\n");
+    printf("\t\t[4] Edit Student.\n");
+    printf("\t\t[5] Delete Student.\n");
+    printf("\t\t[6] Delete All Students.\n");
     printf("\t\t[7] Clear The window.\n");
     printf("\t\t[8] User Guideline.\n");
     printf("\t\t[9] About Us.\n");
     printf("\t\t[0] Exit the Program.\n");
     printf("\t\t=======================\n");
-    printf("\t\tEnter The Choice: ");
+    printf("\t\tEnter Your Choice: ");
 } // end menu
 
 void AddNewStudent()
@@ -725,14 +725,14 @@ void ErrorAndRestart(char *error[100])
 void UserGuideline()
 {
     printf("\n\t\t **** How it Works? ****\n\n");
-    printf(" -> You will only able to store the Student's ID, Name, Email, Phone, Number of Courses.\n");
-    printf(" -> A student can have maximum 4 courses and minimum 1 course.\n");
-    printf(" -> Student ID can be maximum 10 characters long and unique for every students.\n");
-    printf(" -> Student Name can be maximum 20 characters long.\n");
-    printf(" -> Student Email can be maximum 30 characters long and unique for every students.\n");
-    printf(" -> Student Phone can be maximum 20 characters long and unique for every students.\n");
-    printf(" -> Course code can be maximum 10 characters long.\n");
-    printf(" -> Course Name can be maximum 20 characters long.\n\n");
+    printf(" -> You will only be able to store the Student's ID, Name, Email, Phone, and Number of Courses.\n");
+    printf(" -> A student can have a maximum of 4 courses and a minimum of 1 course.\n");
+    printf(" -> Student ID can be a maximum of 10 characters long and unique for every student.\n");
+    printf(" -> Student Name can be a maximum of 20 characters long.\n");
+    printf(" -> Student Email can be a maximum of 30 characters long and unique for every student.\n");
+    printf(" -> Student Phone can be a maximum of 20 characters long and unique for every student.\n");
+    printf(" -> Course code can be a maximum of 10 characters long.\n");
+    printf(" -> Course Name can be a maximum of 20 characters long.\n\n");
 
     printf(" ->> visit www.insideTheDiv.com for more project like this. <<-\n\n");
 }
