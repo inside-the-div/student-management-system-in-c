@@ -237,8 +237,9 @@ void delete() {
         rename("temp.txt","information.txt");
 
         printf("\n\t\t\t\tRecord deleted succesfully\n");
+        printf("how are you");
     }
-    printf("how are you")
+    
 
     getch();
 }
