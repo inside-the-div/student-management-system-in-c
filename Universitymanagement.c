@@ -238,6 +238,7 @@ void delete() {
 
         printf("\n\t\t\t\tRecord deleted succesfully\n");
     }
+    printf("how are you")
 
     getch();
 }
